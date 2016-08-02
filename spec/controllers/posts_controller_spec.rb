@@ -14,6 +14,12 @@ RSpec.describe PostsController, type: :controller do
       get :index
       expect(assigns(:posts)).to eq([my_post])
     end
+
+#    it "overwrites 'SPAM' for every 5th post" do
+#      expect(response).to
+#    end
+
+
   end
 
 #  describe "GET #show" do
