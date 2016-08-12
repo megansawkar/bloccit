@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   before_save { self.email = email.downcase if email.present? }
+  before_save { self.name = name.split { |x| x.capitalize }.join(" ") if name.present? }
 
   validates :name, length: { minimum: 1, maximum: 100 }, presence: true
 
