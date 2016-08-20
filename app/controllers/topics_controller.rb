@@ -76,14 +76,4 @@ class TopicsController < ApplicationController
     flash[:alert] = "You must be an admin to do that."
     redirect_to topics_path
   end
-
-#     if user.role.admin?
-#       can :new, :create, :edit, :update, :destroy, Topic
-#     elsif user.role.moderator?
-#       can :edit, :update, Topic
-#     else
-#       flash[:alert] = "You must be an admin to do that."
-#       redirect_to topics_path
-#     end
-
 end
