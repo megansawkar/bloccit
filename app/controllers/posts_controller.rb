@@ -1,8 +1,8 @@
 class PostsController < ApplicationController
 
   before_action :require_sign_in, except: :show
-  before_action :authorize_user, except: [:index, :show]
-  #before_action :authorize_moderator, only: :destroy
+  before_action :authorize_user, only: [:edit, :update, :destroy]
+  before_action :authorize_moderator, only: :destroy
 
   def create
     @topic = Topic.find(params[:topic_id])
@@ -64,16 +64,21 @@ class PostsController < ApplicationController
 
 
   def authorize_user
-#    post = Post.find(params[:id])
-    return unless current_user.member?
-#    unless current_user.admin?
+      post = Post.find(params[:id])
+
+      return unless current_user.member?
+
+      return if current_user == post.user
+
       flash[:alert] = "You must be an admin to do that."
-      redirect_to new_session_path  #topics_path
+      redirect_to [post.topic, post]
   end
 
   def authorize_moderator
+    post = Post.find(params[:id])
+
     return unless current_user.moderator?
       flash[:alert] = "You must be an admin to do that."
-      redirect_to new_session_path #[post.topic, post]
+      redirect_to [post.topic, post]
   end
 end
