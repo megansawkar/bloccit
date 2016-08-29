@@ -21,6 +21,13 @@
           <small>
             submitted <%= time_ago_in_words(post.created_at) %> ago by <%= post.user.name %> <br>
             <%= post.comments.count %> Comments
+            <div>
+               <h3>Comments</h3>
+               <%= render @topic.comments %>
+             </div>
+             <% if current_user %>
+              <%= render 'comments/form', locals: {parent: @post} %>
+            <% end %>
           </small>
         </div>
       </div>
