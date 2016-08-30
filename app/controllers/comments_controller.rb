@@ -6,41 +6,43 @@ class CommentsController < ApplicationController
     id = params[:post_id] || params[:topic_id]
     if params[:post_id]
       @parent = Post.find id
+      redirect = [@parent.topic, @parent]
     elsif params[:topic_id]
       @parent = Topic.find id
+      redirect = @parent
     end
+    @comment = Comment.new(comment_params)
+    @comment.user = current_user
+    @comment.commentable = @parent
 
-    @comment = @parent.comments.find params[:id]
-    @comment.save
+    if @comment.save
+      flash[:notice] = "Comment saved successfully."
+      redirect_to redirect
+    else
+      flash[:alert] = "Comment failed to save."
+      redirect_to redirect
+    end
   end
-#    @post = Post.find(params[:post_id])
-#    comment = @post.comments.new(comment_params)
-#    comment.user = current_user
-
-#    if comment.save
-#      flash[:notice] = "Comment saved successfully."
-#      redirect_to [@post.topic, @post]
-#    else
-#      flash[:alert] = "Comment failed to save."
-#      redirect_to [@post.topic, @post]
-#    end
-#  end
 
   def destroy
-    @parent = params[:post_id] || params[:topic_id]
-    @comment = @parent.comments.new comment_params
-    @comment.destroy
-  end
-#     @post = Post.find(params[:post_id])
-#     comment = @post.comments.find(params[:id])
+    id = params[:post_id] || params[:topic_id]
+    if params[:post_id]
+      @parent = Post.find id
+      redirect = [@parent.topic, @parent]
+    elsif params[:topic_id]
+      @parent = Topic.find id
+      redirect = @parent
+    end
+    comment = Comment.find params[:id]
 
-#     if comment.destroy
-#       flash[:notice] = "Comment was deleted successfully."
-#       redirect_to [@post.topic, @post]
-#     else
-#       flash[:alert] = "Comment couldn't be deleted. Try again."
-#       redirect_to [@post.topic, @post]
-#     end
+     if comment.destroy
+       flash[:notice] = "Comment was deleted successfully."
+       redirect_to redirect
+     else
+       flash[:alert] = "Comment couldn't be deleted. Try again."
+       redirect_to redirect
+     end
+   end 
 
 
 
@@ -48,7 +50,7 @@ class CommentsController < ApplicationController
   private
 
   def comment_params
-    params.require(:comment).permit(:x, :y)
+    params.require(:comment).permit(:body)
   end
 
   def authorize_user

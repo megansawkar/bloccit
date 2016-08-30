@@ -26,7 +26,7 @@
                <%= render @topic.comments %>
              </div>
              <% if current_user %>
-              <%= render 'comments/form', locals: {parent: @post} %>
+              <%= render partial: 'comments/form', locals: {parent: @topic} %>
             <% end %>
           </small>
         </div>
