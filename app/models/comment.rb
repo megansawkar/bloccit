@@ -12,5 +12,5 @@ class Comment < ActiveRecord::Base
     post.favorites.each do |favorite|
         FavoriteMailer.new_comment(favorite.user, post, self).deliver_now
     end
-  end  
+  end
 end
