@@ -34,7 +34,6 @@ class Post < ActiveRecord::Base
      update_attribute(:rank, new_rank)
   end
 
-  private
 
   def make_favorite
     Favorite.create(post: self, user: self.user)
