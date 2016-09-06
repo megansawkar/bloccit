@@ -32,3 +32,12 @@
 <% else %>
   <%= render @user.comments %>
 <% end %>
+
+<h2>Favorited</h2>
+ <% if @user.favorites.empty? %>
+  <p><%= @user.name %> has no favorited posts. </p>
+ <% else %>
+ <% @user.favorites do |favorite| %>
+  <%= render 'favorites/_favorites', favorite: favorite %>
+ <% end %>
+ <% end %>
