@@ -43,7 +43,7 @@ RSpec.describe CommentsController, type: :controller do
      describe "DELETE destroy" do
        it "redirects the user to the posts show view" do
          delete :destroy, post_id: my_post.id, id: my_comment.id
-         expect(response).to redirect_to([my_topic, my_post])
+         expect(response).to redirect_to [my_topic, my_post]
        end
      end
    end
