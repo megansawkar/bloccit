@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Api::V1::TopicsController, type: :controller do
+RSpec.describe Api::V1::PostsController, type: :controller do
   let(:my_user) { create(:user) }
   let(:my_topic) { create(:topic) }
   let(:my_post) { create(:post, topic: my_topic, user: my_user) }
@@ -75,7 +75,7 @@ RSpec.describe Api::V1::TopicsController, type: :controller do
         expect(response.content_type).to eq 'application/json'
       end
 
-      it "creates a post wtih the correct attributes" do
+      it "creates a post with the correct attributes" do
         hashed_json = JSON.parse(response.body)
         expect(hashed_json["title"]).to eq(@new_post.title)
         expect(hashed_json["description"]).to eq(@new_post.description)
