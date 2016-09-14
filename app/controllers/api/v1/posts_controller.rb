@@ -3,12 +3,11 @@ class Api::V1::PostsController < Api::V1::BaseController
   before_action :authorize_user, except: [:index, :show]
 
   def create
-    post = Post.new(post_params)
     topic = Topic.find(params[:topic_id])
-    post.user = current_user
-
+    post = topic.posts.build(post_params)
+    post.user = @current_user
     if post.valid?
-      post.save! 
+      post.save!
       render json: post, status: 201
     else
       render json: {error: "Post is invalid", status: 400}, status: 400
