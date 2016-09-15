@@ -34,10 +34,10 @@
 <% end %>
 
 <h2>Favorited</h2>
- <% if @user.favorites.empty? %>
+<% if @user.favorites.empty? %>
   <p><%= @user.name %> has no favorited posts. </p>
- <% else %>
- <% @user.favorites do |favorite| %>
-  <%= render partial: 'favorites/_favorites', favorite: favorite %>
+<% else %>
+ <% @user.favorites.each do |favorite| %>
+  <%= render partial: 'favorites/favorite', locals: { favorite: favorite } %>
  <% end %>
- <% end %>
+<% end %>
