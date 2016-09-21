@@ -40,4 +40,6 @@
  <% @user.favorites.each do |favorite| %>
   <%= render partial: 'favorites/favorite', locals: { favorite: favorite } %>
  <% end %>
+ <p><%= render @user.votes %></p>
+ <p><%= render @user.comments %></p>
 <% end %>

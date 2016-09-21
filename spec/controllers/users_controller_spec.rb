@@ -75,4 +75,25 @@ RSpec.describe UsersController, type: :controller do
       expect(assigns(:user)).to eq(factory_user)
     end
   end
+
+  describe "current_user signed in" do
+    before do
+      current_user :new_user_attributes
+    end
+
+    it "returns http success" do
+      get :show, {id: current_user.id}
+      expect(response).to render_template :show
+    end
+
+    it "assigns factory_user to @user" do
+      get :show, {id: user.id}
+      expect(assigns(:user)).to eq(factory_user)
+    end
+
+    it "renders the #show view" do
+      get :show, {id: user.id}
+      expect(response).to render_template :show
+    end
+  end
 end
