@@ -3,12 +3,10 @@ class VotesController < ApplicationController
 
    def up_vote
      update_vote(1)
-     redirect_to :back
    end
 
    def down_vote
      update_vote(-1)
-     redirect_to :back
    end
 
    private
