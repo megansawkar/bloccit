@@ -1,1 +1,1 @@
-('.js-votes-points').html("<%= pluralize(@post.points, 'point') %>")
+ $('#js-votes-post-' +<%= @post.id %>).html("<%= @post.points %>");
