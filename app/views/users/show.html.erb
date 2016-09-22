@@ -33,13 +33,17 @@
   <%= render @user.comments %>
 <% end %>
 
-<h2>Favorited</h2>
-<% if @user.favorites.empty? %>
-  <p><%= @user.name %> has no favorited posts. </p>
-<% else %>
- <% @user.favorites.each do |favorite| %>
-  <%= render partial: 'favorites/favorite', locals: { favorite: favorite } %>
+<h2>Favorited Posts</h2>
+<% if @user.favorites.any? %>
+  <%= @user.favorites.each do |fav| %>
+  <hr />
+  <%= image_tag fav.post.user.avatar_url(48), class: "fav gravatar" %>
+  <p>
+    <%= fav.post.title %><br />
+    <%= pluralize(fav.post.comments.count, 'comment') %>
+    <%= pluralize(fav.post.points, 'point') %>
+  </p>
+ <% end  %>
+ <% else %>
+ <p><%= @user.name %> has no favorited posts. </p>
  <% end %>
- <p><%= render @user.votes %></p>
- <p><%= render @user.comments %></p>
-<% end %>
